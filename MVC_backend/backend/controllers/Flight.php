@@ -40,22 +40,68 @@ class Flight extends Controller
                             "message" => "Flight Created with success 💥",
                         )));
                     }
-                }else{
+                } else {
                     print_r(json_encode(array(
-                        'error' => "You Don't Have Permition to make this action 💢 "
+                        'error' => "You Don't Have Permition to make this action 💢 ",
                     )));
                     die();
                 }
             } catch (\Throwable $th) {
                 print_r(json_encode(array(
-                    'error' => "Authentication error 💢 "
+                    'error' => "Authentication error 1💢 ",
                 )));
             }
-        }else{
+        } else {
+            print_r(json_encode(array(
+                'error' => "Authentication error 2💢 ",
+            )));
+        }
+    }
+
+    public function delete($id)
+    {
+        print_r($id);
+        $this->userModel->delete($id);
+    }
+
+    public function edit($id)
+    {
+
+        $headers = apache_request_headers();
+        $headers = isset($headers['Authorization']) ? explode(' ', $headers['Authorization']) : null;
+        if ($headers) {
+            try {
+                $infos = $this->verifyAuth($headers[1]);
+                if ($infos->role == "Admin") {
+                    $flight = $this->userModel->edit($this->data, $id);
+                    if ($flight) {
+                        print_r(json_encode(array(
+                            "message" => "Flight Edited with success 💥",
+                        )));
+                    }
+                } else {
+                    print_r(json_encode(array(
+                        'error' => "You Don't Have Permition to make this action 💢 ",
+                    )));
+                    die();
+                }
+            } catch (\Throwable $th) {
+                print_r(json_encode(array(
+                    'error' => "Authentication error 💢 ",
+                )));
+            }
+        } else {
             print_r(json_encode(array(
                 'error' => "Authentication error 💢 "
             )));
         }
+
+    }
+
+
+    public function search(){
+        $result = $this->userModel->getBySearch($this->data);
+        print_r(json_encode($result));
     }
 
 }

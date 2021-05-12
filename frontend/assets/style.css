@@ -1,0 +1,329 @@
+body {
+    width: 100%;
+    background-color: #262626;
+}
+
+.auth {
+    margin-top: 50px;
+    width: 50%;
+    padding: 30px;
+}
+
+.section {
+    font-size: 12px;
+    width: 100%;
+    height: 100vh;
+   
+    position: relative;
+    background-image: url('imgs/undraw_connected_world.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+
+.section .section-top {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    justify-content: flex-start;
+    position: relative;
+    backdrop-filter: invert(70%);
+}
+
+.section .section-top .img2 {
+    width: 30%;
+    z-index: 10;
+}
+
+/* .section .section-top .img1 {
+    filter: invert(1);
+    opacity: 0.5;
+    transform: translateY(+50px);
+}
+
+.section .section-top img {
+    position: absolute;
+} */
+
+
+
+.booking-form {
+
+    background: transparent;
+    /* Note: currently only Safari supports backdrop-filter */
+    backdrop-filter: blur(30px);
+    --webkit-backdrop-filter: blur(30px);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 2px
+}
+
+.booking-form>form .row.no-margin {
+    margin-right: 0;
+    margin-left: 0
+}
+
+.booking-form>form .row.no-margin>[class*=col-] {
+    padding-right: 0;
+    padding-left: 0
+}
+
+.booking-form .form-group {
+    position: relative;
+    padding: 25px;
+    margin-bottom: 0
+}
+
+.booking-form .form-group:after {
+    content: '';
+    background: rgba(129, 131, 144, .15);
+    position: absolute;
+    top: 25px;
+    bottom: 0;
+    right: 0;
+    width: 2px;
+    height: 75px
+}
+
+.booking-form .form-control {
+    background-color: transparent;
+    border-radius: 0;
+    border: none;
+    height: 50px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    font-size: 20px;
+    color: #222;
+    font-weight: 400;
+    padding: 0;
+    font-size: 14px;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+    color: #818390
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+    color: #818390
+}
+
+.booking-form .form-control::placeholder {
+    color: #818390
+}
+
+.booking-form input[type=date].form-control:invalid {
+    color: #818390
+}
+
+.booking-form select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+}
+
+.booking-form select.form-control+.select-arrow {
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+    width: 32px;
+    line-height: 32px;
+    height: 32px;
+    text-align: center;
+    pointer-events: none;
+    color: #818390;
+    font-size: 14px
+}
+
+.booking-form select.form-control+.select-arrow:after {
+    content: '\279C';
+    display: block;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+.booking-form .form-label {
+    color: #ff0063;
+    display: block;
+    font-weight: 800;
+    height: 25px;
+    line-height: 25px;
+    font-size: 16px
+}
+
+.booking-form .form-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 10px;
+}
+
+.booking-form .submit-btn {
+    background: #ff0063;
+    border: none;
+    text-transform: capitalize;
+    display: block;
+    border-radius: 2px;
+    width: 100%;
+    height: 75px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+}
+
+.navlinks {
+    gap: 20px;
+    font-weight: 800;
+}
+
+header {
+    padding: 0 100px;
+    background-color: #fffff6;
+    /* box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px; */
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+}
+
+.navLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.navLogin a {
+    
+    width: 60%;
+}
+
+
+.navLogin button a{
+    color: white;
+    width: 100%;
+}
+
+
+.loginPage{
+    background-color: #fffff6;
+}
+
+
+
+
+/* fllights page */
+
+.badge-success {
+    background-color: #01a101;
+
+
+}
+
+
+.badge-failed {
+    background-color: #e61a2d;
+
+}
+
+.flights {
+    width: 100%;
+}
+
+.flights .row{
+    width: 100%;
+}
+.flights th {
+    font-weight: 800;
+}
+
+.badge {
+    min-width: 50px;
+    max-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-body {
+    position: relative;
+}
+
+#addFlight{
+    position: absolute;
+    right: 40px;
+    transition: all .2s ease ;
+}
+
+#addFlight:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.FlightsPage {
+    background-color: #fffff6;
+    position: relative;
+}
+
+
+#addModal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: brightness(0.3);
+    padding: 30px;
+}
+
+#addModal .formContainer{
+    width: 60%;
+    background-color: rgb(250, 243, 243);
+    padding: 30px;
+    border-radius: 5px;
+    position: relative;
+}
+
+#addModal .formContainer #closeModal{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 40px;
+    transform: translateY(-3px);
+    color: red;
+    transition: all .2s ease;
+}
+
+#addModal .formContainer #closeModal:hover{
+    transform: scale(1.1) translateY(-4px);
+    cursor: pointer;
+}
+
+
+
+#reserve {
+    margin-left: 10px;
+}
+
+.reserveTable{
+    margin: 40px;
+    color: white;
+}
+
+.reserveTable .table{
+    color: white;
+}
+
+
+
+.passengerContainer {
+    display: none;
+}
+
+.passengerContainer h1{
+    width: 100%;
+    text-align: center;
+}

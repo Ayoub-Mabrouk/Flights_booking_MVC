@@ -74,4 +74,8 @@ class UserModel
         }
         return $this->getUserById($data->cin);
     }
+
+
+    
+   
 }

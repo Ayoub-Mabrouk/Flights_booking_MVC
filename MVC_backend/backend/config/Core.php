@@ -1,4 +1,9 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Methods:POST,GET');
+header('Access-Control-Allow-Headers: content-type');
+header('Content-Type: application/json');
 class Core
 {
     protected $Controller = 'Pages';

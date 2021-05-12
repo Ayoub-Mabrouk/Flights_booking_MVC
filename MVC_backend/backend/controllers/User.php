@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: http://127.0.0.1:3000');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 require_once '../vendor/autoload.php';
 
@@ -18,7 +22,6 @@ class User extends Controller
         $headers = isset($headers['Authorization']) ? explode(' ', $headers['Authorization']) : null;
         if ($headers) {
             try {
-
                 $this->verifyAuth($headers[1]);
                 if ($data == 'Admin' || $data == 'Client') {
                     $user = $this->userModel->getUserByRole($data);
@@ -35,13 +38,11 @@ class User extends Controller
                 )));
             }
         } else {
-            http_response_code(401);
             print_r(json_encode(array(
                 "error" => "unauthorized",
             )));
         }
     }
-
 
     public function users($data)
     {
@@ -71,7 +72,6 @@ class User extends Controller
                 )));
             }
         } else {
-            http_response_code(401);
             print_r(json_encode(array(
                 "error" => "unauthorized",
             )));
@@ -90,11 +90,21 @@ class User extends Controller
                     'Token' => $token,
                 )));
             } else {
-                http_response_code(401);
-                print_r(json_encode(array(
-                    'error' => 'email or password wrong',
-                )));
+
+                $res=json_encode(array(
+                    'error' => 'password incorrect',
+                ));
+                
+                print_r($res);
             }
+        } else {
+
+
+            $res=json_encode(array(
+                'error' => 'email incorrect',
+            ));
+           
+            print_r($res);
         }
     }
 
@@ -115,5 +125,9 @@ class User extends Controller
             die();
         }
 
+    }
+
+    public function delete($id){
+        $this->userModel->delete($id);
     }
 }
