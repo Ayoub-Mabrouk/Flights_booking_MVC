@@ -9,14 +9,14 @@ const formLogin = document.querySelector('#auth-login');
 const formRegister = document.querySelector('#auth-register');
 
 
-formLogin.addEventListener('submit', (e) => {
+formLogin?formLogin.addEventListener('submit', (e) => {
    e.preventDefault()
    login()
-})
-formRegister.addEventListener('submit', (e) => {
+}):null
+formRegister?formRegister.addEventListener('submit', (e) => {
    e.preventDefault()
    register()
-})
+}):null
 
 function login() {
    newUser.login(loginEmail.value, loginPassword.value)

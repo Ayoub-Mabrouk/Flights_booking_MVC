@@ -1,6 +1,7 @@
 <?php
 
 require_once '../vendor/autoload.php';
+require_once '../vendor/fpdf/fpdf.php';
 
 class Reservation extends Controller
 {
@@ -76,13 +77,11 @@ class Reservation extends Controller
                         $result = $this->resModel->addWithReturn($this->data);
                         $currentfilght->available_places = $currentfilght->available_places - $this->data->guests;
                         $this->flightModel->edit($currentfilght, $this->data->flight);
-                        print_r(json_encode(array('message'=>'Reservation done 🐱‍🏍')));
 
                     } else if ($currentfilght->available_places >= $this->data->guests) {
                         $result = $this->resModel->add($this->data);
                         $currentfilght->available_places = $currentfilght->available_places - $this->data->guests;
                         $this->flightModel->edit($currentfilght, $this->data->flight);
-
                     } else {
                         print_r(json_encode(array('error' => 'Plane Full bro 😩')));
                         die();
@@ -94,8 +93,44 @@ class Reservation extends Controller
 
                 print_r(json_encode(array(
                     'message' => 'Reservation done 🐱‍🏍',
-                    'result'=>$result)
+                    'result' => $result)
                 ));
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+    }
+
+    public function delete($id)
+    {
+        $headers = apache_request_headers();
+        $headers = isset($headers['Authorization']) ? explode(' ', $headers['Authorization']) : null;
+        if ($headers) {
+            try {
+                $this->verifyAuth($headers[1]);
+                $this->resModel->delete($id);
+                print_r(json_encode(array(
+                    "message" => "deleted 😱",
+                )));
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+    }
+
+    function print($id) {
+        $headers = apache_request_headers();
+        $headers = isset($headers['Authorization']) ? explode(' ', $headers['Authorization']) : null;
+        if ($headers) {
+            try {
+                $this->verifyAuth($headers[1]);
+
+                $pdf = new FPDF();
+                $pdf->AddPage();
+                $pdf->SetFont('Arial', 'B', 16);
+                $pdf->Cell(40, 10, 'Hello World!');
+                $pdf->Output();
+                exit;
             } catch (\Throwable $th) {
                 throw $th;
             }

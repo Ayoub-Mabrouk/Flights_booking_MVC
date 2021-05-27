@@ -25,6 +25,13 @@ class Flight extends Controller
         print_r(json_encode($flight));
     }
 
+    public function Return($id)
+    {
+        $flight = $this->userModel->ReturnFlights($id);
+        print_r(json_encode($flight));
+    }
+
+
     public function add()
     {
 

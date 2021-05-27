@@ -3,7 +3,7 @@ class User {
     url = 'http://localhost/MVC/user'
     userData
 
-   
+
 
 
     login = (email, password) => {
@@ -41,48 +41,48 @@ class User {
 
 
 
-    checkAuth = () => {
-        this.Token = localStorage.getItem('Token')
-        return this.Token
+    checkAuth = async () => {
+        this.token = localStorage.getItem('Token')
+        console.log(this.token);
+        const result = await fetch(`${this.url}/token`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+        }).then(Response => Response.json()).then((result) => {
+            return result
+        })
+        return result;
     }
 
     isAdmin = () => {
-        dyToken = ""
         if (!this.Token) {
-            this.Token = localStorage.getItem('Token')
-        } else {
-            var base64Url = token.split('.')[1];
+            this.token = localStorage.getItem('Token')
+        } 
+            var base64Url = this.token.split('.')[1];
             var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
             var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
-            dyToken = JSON.parse(jsonPayload).role;
-        }
-        return dyToken
+            this.role = JSON.parse(jsonPayload).role;
+        
     }
 
     getUserInfo = () => {
-        if (!this.Token) {
-            this.Token = localStorage.getItem('Token')
-            var base64Url = this.Token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            this.currentUser = JSON.parse(jsonPayload).role;
-        } else {
-            var base64Url = this.Token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            this.currentUser = JSON.parse(jsonPayload);
-        }
+        this.Token = localStorage.getItem('Token')
+        var base64Url = this.Token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        this.currentUser = JSON.parse(jsonPayload);
         return this.currentUser
     }
 
     getUserByCin = async (cin) => {
-        fetch(`${this.url}/user/${cin}`, {
+        return fetch(`${this.url}/user/${cin}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -97,6 +97,17 @@ class User {
 
     getLogs = () => {
 
+    }
+
+    all = async () => {
+        return fetch(`${this.url}/users`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${this.Token}`
+            },
+        }).then(response => response.json())
     }
 
 

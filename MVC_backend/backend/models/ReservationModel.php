@@ -9,7 +9,7 @@ class ReservationModel
 
     public function getMyReservations($cin)
     {
-        $this->db->query("SELECT * FROM flight f,reservation r,user u WHERE f.id=r.flight AND :Client=r.client");
+        $this->db->query("SELECT * FROM flight f,reservation r,user u WHERE f.id=r.flight AND :Client=r.client AND :Client=u.cin ORDER BY  reserved_time DESC");
 
         $this->db->bind(':Client', $cin);
         return $this->db->all();
@@ -43,15 +43,15 @@ class ReservationModel
                 accepted_return = :accepted_return,
                 client = :cin,
                 flight = :flight,
-                return_flight = :return_flight
+                return_Flight = :return_Flight
             ");
             $this->db->bind(':cin', $data->cin);
-            $this->db->bind(':cin', $data->accepted_return);
+            $this->db->bind(':accepted_return', $data->accepted_return);
             $this->db->bind(':flight', $data->flight);
-            $this->db->bind(':return_Flight', $data->return_flight);
+            $this->db->bind(':return_Flight', $data->return_Flight);
 
             $this->db->single();
-
+            return $this->getReservationByInfos($data->cin, $data->flight);
         } catch (\PDOExeption $err) {
             return $err->getMessage();
             die();
@@ -82,5 +82,12 @@ class ReservationModel
         }
 
         return true;
+    }
+
+    public function delete($id)
+    {
+        $this->db->query('DELETE FROM reservation WHERE id=:id');
+        $this->db->bind(':id', $id);
+        $this->db->execute();
     }
 }

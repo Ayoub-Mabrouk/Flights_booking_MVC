@@ -12,6 +12,7 @@ const showFlights = async () => {
         flights.all.map((f) => {
             color = f.available_places > 10 ? `<span class="badge badge-success">${f.available_places}</span>` : `<span class="badge badge-failed">${f.available_places}</span>`
             let tr = document.createElement('tr')
+            /*html*/
             tr.innerHTML = `
             <tr>
             <th scope="row"> ${f.airport}</th>
@@ -38,6 +39,7 @@ const showFlightsReserve = async () => {
         flights.all.map((f) => {
             color = f.available_places > 10 ? `<span class="badge badge-success">${f.available_places}</span>` : `<span class="badge badge-failed">${f.available_places}</span>`
             let tr = document.createElement('tr')
+            /*html*/
             tr.innerHTML = `
             <tr>
             <th scope="row"> ${f.airport}</th>
@@ -58,8 +60,8 @@ const showFlightsReserve = async () => {
 }
 
 
-resDash?showFlightsReserve():null
-dash?showFlights():null
+resDash ? showFlightsReserve() : null
+dash ? showFlights() : null
 
 const DeleteFlight = (id) => {
     const confirme = document.querySelector('#ConfimeDeleteFlight')
@@ -85,8 +87,6 @@ const ConfimeDeletet = (id) => {
 const showModal = () => {
     const modal = document.querySelector('#addModal')
     const dash = document.querySelector('#flights');
-
-
     modal.style.display = 'flex'
 
 }
@@ -149,10 +149,10 @@ const addForm = (event) => {
         price: price.value,
         airport: airport.value
     }
-    console.log(flight);
-    flights.add(flight).then(() => {
+    flights.add(flight).then(()=>{
         closeModal()
     })
+
 }
 
 
@@ -227,21 +227,24 @@ const EditFlight = (id) => {
 
 
 getInfoSearch = (e) => {
+    document.querySelector('#smallMess').innerHTML = ""
     const dash = document.querySelector('#reservations');
     const airport = document.querySelector('#airport').value
     const Destination = document.querySelector('#Destination').value
     const Going = document.querySelector('#Going').value
-    // const time = document.querySelector('#time').value
+    const ReturnToggle = document.querySelector('#returnButton').classList.contains('accepted')
     const Guests = document.querySelector('#Guests').value
     e.preventDefault()
     let data = {
         airport,
-        CityTo:Destination,
-        going_time:Going,
+        CityTo: Destination,
+        going_time: Going,
     }
 
     flights.getFlightsBySearch(data).then(result => {
         Passengers.guests = Guests
+        ReserverUser.acceptedReturn = ReturnToggle
+        ReserverUser.finished = false
         dash.innerHTML = ''
         showFlightsReserve()
     })

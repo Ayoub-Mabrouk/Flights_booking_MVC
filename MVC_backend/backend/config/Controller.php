@@ -46,8 +46,6 @@ class Controller
         
         return $jwt;
     }
-
-
     public function verifyAuth($token){
       $decoded = JWT::decode($token, $this->key, array('HS512'));
       return $decoded;

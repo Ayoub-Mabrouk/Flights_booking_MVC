@@ -41,7 +41,7 @@ class Flight {
     }
     add = async (flight) => {
 
-        return fetch(`${this.url}/add`, {
+         fetch(`${this.url}/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -50,10 +50,6 @@ class Flight {
             },
             body: JSON.stringify(flight)
         })
-            .then(Response => Response.json())
-            .then(data => {
-                console.log(data);
-            })
     }
 
     edit = async (id, body) => {
@@ -101,5 +97,19 @@ class Flight {
             .then(data => {
                 this.res.push(data)
             })
+    }
+
+
+    getReturns = async (id) => {
+        return fetch(`${this.url}/Return/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${this.Token}`
+            }
+        })
+            .then(Response => Response.json())
+            
     }
 }

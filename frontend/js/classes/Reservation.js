@@ -3,14 +3,18 @@ class Reservation {
     url = 'http://localhost/MVC/reservation'
     all = []
     Token
-    flightId
+    flightIds = {
+        oneTrip : 0,
+        roudTrip :0
+    }
+    
 
     constructor() {
         this.Token = this.Token ? this.Token : localStorage.getItem("Token")
     }
 
 
-    
+
     getReservations = async () => {
         return fetch(`${this.url}/reservations`, {
             method: 'GET',
@@ -49,27 +53,23 @@ class Reservation {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${this.Token}`
             },
-        }).then(Response => Response.json()).then(data => {
-
-        })
+        }).then(Response => Response.json())
     }
 
 
     add = async (user) => {
 
-        return fetch(`${this.url}/add`, {
+        const data = await fetch(`${this.url}/add`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
                 'Authorization': `Bearer ${this.Token}`
             },
             body: JSON.stringify(user)
-        })
-            .then(Response => Response.json())
+        }).then(Response => Response.json())
             .then(data => {
                 return data
             })
+            return data
     }
 
     edit = async (id, body) => {

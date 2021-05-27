@@ -44,36 +44,32 @@ class User extends Controller
         }
     }
 
-    public function users($data)
+    public function users()
     {
         $headers = apache_request_headers();
         $headers = isset($headers['Authorization']) ? explode(' ', $headers['Authorization']) : null;
-
         if ($headers) {
             try {
-                $this->verifyAuth($headers[1]);
-
-                if ($data === 'Admin' || $data === 'Client') {
-                    $users = $this->userModel->getUserByRole($data);
-                    foreach ($users as $user) {
-                        unset($user->password);
-                    }
-                    print_r(json_encode($users));
+                $infos = $this->verifyAuth($headers[1]);
+                if ($infos->role == "Admin") {
+                    $users = $this->userModel->getUsers();
+                        print_r(json_encode(array(
+                            "users" => $users,
+                        )));
                 } else {
-                    $users = $this->userModel->getUsers($data);
-                    foreach ($users as $user) {
-                        unset($user->password);
-                    }
-                    print_r(json_encode($users));
+                    print_r(json_encode(array(
+                        'error' => "You Don't Have Permition to make this action 💢 ",
+                    )));
+                    die();
                 }
             } catch (\Throwable $th) {
                 print_r(json_encode(array(
-                    "error" => "unauthorized",
+                    'error' => "Authentication error 1💢 ",
                 )));
             }
         } else {
             print_r(json_encode(array(
-                "error" => "unauthorized",
+                'error' => "Authentication error 2💢 ",
             )));
         }
     }
@@ -129,5 +125,27 @@ class User extends Controller
 
     public function delete($id){
         $this->userModel->delete($id);
+    }
+
+    public function Token(){
+        $headers = apache_request_headers();
+        $headers = isset($headers['Authorization']) ? explode(' ', $headers['Authorization']) : null;
+
+        if ($headers) {
+            try {
+               
+            $this->verifyAuth($headers[1]);
+            print_r(json_encode(array('message' => 'Authorized' )));
+                    
+            } catch (\Throwable $th) {
+                print_r(json_encode(array(
+                    "error" => "unauthorized",
+                )));
+            }
+        } else {
+            print_r(json_encode(array(
+                "error" => "unauthorized",
+            )));
+        }
     }
 }

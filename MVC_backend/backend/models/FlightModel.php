@@ -62,6 +62,22 @@ class FlightModel
         $this->db->bind(':id', $id);
         $this->db->execute();
     }
+
+    public function ReturnFlights($id)
+    {
+        $currFlight = $this->flightInfo($id);
+        if ($currFlight) {
+            $this->db->query("SELECT * FROM flight WHERE CityFrom = :CityFrom AND CityTo = :CityTo ");
+            $this->db->bind(':CityTo', $currFlight->CityFrom);
+            $this->db->bind(':CityFrom', $currFlight->CityTo);
+            
+            // $this->db->bind(':going_time', explode(' ', $currFlight->going_time)[0]);
+            return $result = $this->db->all();
+        }
+        // print_r($currFlight);
+        
+    }
+
     public function edit($data, $id)
     {
         try {
@@ -111,7 +127,7 @@ class FlightModel
             ");
             $this->db->bind(':going_time', $data->going_time);
             $this->db->bind(':airport', $data->airport);
-            $this->db->bind(':CityTo',$data->CityTo);
+            $this->db->bind(':CityTo', $data->CityTo);
             $result = $this->db->all();
             return $result;
 
