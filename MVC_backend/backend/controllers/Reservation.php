@@ -118,23 +118,6 @@ class Reservation extends Controller
         }
     }
 
-    function print($id) {
-        $headers = apache_request_headers();
-        $headers = isset($headers['Authorization']) ? explode(' ', $headers['Authorization']) : null;
-        if ($headers) {
-            try {
-                $this->verifyAuth($headers[1]);
-
-                $pdf = new FPDF();
-                $pdf->AddPage();
-                $pdf->SetFont('Arial', 'B', 16);
-                $pdf->Cell(40, 10, 'Hello World!');
-                $pdf->Output();
-                exit;
-            } catch (\Throwable $th) {
-                throw $th;
-            }
-        }
-    }
+  
 
 }

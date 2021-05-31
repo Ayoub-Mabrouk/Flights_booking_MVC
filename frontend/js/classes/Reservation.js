@@ -16,7 +16,7 @@ class Reservation {
 
 
     getReservations = async () => {
-        return fetch(`${this.url}/reservations`, {
+        return fetch(`${this.url}/all`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

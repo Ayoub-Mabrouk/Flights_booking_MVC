@@ -13,7 +13,7 @@
   --bs-gray: #757575;
   --bs-gray-dark: #4f4f4f;
   --bs-primary: #ff0063;
-  --bs-secondary: #b23cfd;
+  --bs-secondary: #b8b8b8;
   --bs-success: #00b74a;
   --bs-info: #39c0ed;
   --bs-warning: #ffa900;
@@ -2201,7 +2201,7 @@ progress {
 }
 
 .border-secondary {
-  border-color: #b23cfd !important;
+  border-color: #b8b8b8 !important;
 }
 
 .border-success {
@@ -3259,7 +3259,7 @@ progress {
 }
 
 .text-secondary {
-  color: #b23cfd !important;
+  color: #b8b8b8 !important;
 }
 
 .text-success {
@@ -3319,7 +3319,7 @@ progress {
 }
 
 .bg-secondary {
-  background-color: #b23cfd !important;
+  background-color: #b8b8b8 !important;
 }
 
 .bg-success {
@@ -6987,7 +6987,7 @@ button:focus {
 }
 
 .bg-secondary {
-  background-color: #b23cfd !important;
+  background-color: #b8b8b8 !important;
 }
 
 .bg-success {

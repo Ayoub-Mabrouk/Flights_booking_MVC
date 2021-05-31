@@ -13,7 +13,7 @@ const reservePop = async (id) => {
     // dash.remove()
     if (Passengers.guests > 0) {
         dash.style.display = 'none'
-        document.querySelector('#reservations').innerHTML =""
+        document.querySelector('#reservations').innerHTML = ""
         Passengers.guests == 1 ? button.innerHTML = 'Reserve Now' : null
         passengerForm.style.display = 'block'
         // getReturnFlights(ReserverUser.flightIds.oneTrip)
@@ -32,7 +32,7 @@ const reservePop = async (id) => {
 }
 
 
-const returnInfo = (id) =>{
+const returnInfo = (id) => {
     ReserverUser.flightIds.roudTrip = id
     console.log(ReserverUser.flightIds);
     ReserverUser.finished = true
@@ -43,7 +43,7 @@ const getReturnFlights = (id) => {
     console.log(id);
     const returnForm = document.querySelector('#reservations')
     returnForm.innerHTML = ""
-    
+
     flights.getReturns(id).then((result) => {
         result.map((f) => {
             console.log(f);
@@ -77,7 +77,7 @@ const reserveForUser = async () => {
         cin: authUser.getUserInfo().cin,
         flight: ReserverUser.flightIds.oneTrip,
         return_Flight: ReserverUser.flightIds.roudTrip,
-        accepted_return: ReserverUser.acceptedReturn?1:0,
+        accepted_return: ReserverUser.acceptedReturn ? 1 : 0,
         guests: Passengers.guestsData.length + 1
     }
     console.log(UserReservation);
@@ -170,16 +170,47 @@ const nextPassenger = (event) => {
 }
 
 
-
-
-
 const dashRes = document.querySelector('#myreservations')
-const getMy = () => {
-    ReserverUser.getMyReservations().then(() => {
-        console.log(ReserverUser.all);
+const getAllres = () => {
+
+    document.querySelector("#CancelBtn") ? document.querySelector("#CancelBtn").remove() : null
+    ReserverUser.getReservations().then(() => {
         ReserverUser.all.map(result => {
             let tr = document.createElement('tr')
-            console.log(result);
+            /*html*/
+            tr.innerHTML = `
+                <td onclick="guests(${result.id})" class="td-hover" scope="col">
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#guests" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Guests
+                    </a>
+                </td>
+                <td class="td-hover" scope="col">${result.airport}</td>
+                <td class="td-hover" scope="col">${result.CityFrom}</td>
+                <td class="td-hover" scope="col">${result.CityTo}</td>
+                <td class="td-hover" scope="col">${result.going_time.split(' ')[0]}</td>
+                <td class="td-hover" scope="col">${result.going_time.split(' ')[1]}</td>
+                <td class="td-hover" scope="col">${result.price}</td>
+                <td class="th-hover" scope="col">
+                <button class="btn btn-sm btn-secondary" onclick="printTicket(${result.id})" type="button" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                    <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+                    <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                </svg>
+                </button>
+            </td>               
+            `
+
+            dashRes?dashRes.appendChild(tr):null
+        })
+    })
+}
+
+
+const getMy = () => {
+    ReserverUser.getMyReservations().then(() => {
+        
+        ReserverUser.all.map(result => {
+            let tr = document.createElement('tr')
             /*html*/
             tr.innerHTML = `
                 <td onclick="guests(${result.id})" class="td-hover" scope="col">
@@ -194,17 +225,35 @@ const getMy = () => {
                 <td class="td-hover" scope="col">${result.going_time.split(' ')[1]}</td>
                 <td class="td-hover" scope="col">${result.price}</td>
                 <td class="th-hover" scope="col">
+                <button class="btn btn-sm btn-secondary" onclick="printTicket(${result.id})" type="button" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                    <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+                    <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                </svg>
+                </button>
+                
+                </td> 
+                <td class="th-hover" scope="col">
                 <button class="btn btn-sm btn-danger" onclick="cancelRes(${result.id})" type="button" data-mdb-toggle="modal" data-mdb-target="#deleteModal"><i class="fa fa-trash"></i></button>
-            </td>               
+                </td> 
+                          
             `
 
-            dashRes.appendChild(tr)
+            dashRes?dashRes.appendChild(tr):null
         })
     })
 }
 
 
-dashRes ? getMy() : null
+const printTicket = (id)=>{
+    380
+    window.open(`http://localhost:3000/assets/pages/download.html?id=${id}`, "_blank")
+}
+
+
+isAdmin = authUser.getUserInfo().role
+
+isAdmin != "Admin" ? getMy() : getAllres()
 
 const showGuests = (result) => {
     const modal = document.querySelector('#guestsContainer')
@@ -249,12 +298,8 @@ const guests = (id) => {
     Passengers.getPassengersByRes(id).then((result) => {
         showGuests(result)
         console.log(result);
-
     })
-
 }
-
-
 
 
 const cancelRes = (id) => {
@@ -262,7 +307,9 @@ const cancelRes = (id) => {
         console.log("started");
         ReserverUser.delete(id).then((result) => {
             dashRes.innerHTML = ""
-            getMy()
+            setTimeout(() => {
+                getMy()
+            }, 300);
             console.log(result);
         })
     })
@@ -270,7 +317,7 @@ const cancelRes = (id) => {
 
 
 let returnButton = document.querySelector('#returnButton')
-returnButton.addEventListener('click', () => {
+returnButton ? returnButton.addEventListener('click', () => {
     returnButton.classList.toggle('accepted');
-});
+}) : null;
 

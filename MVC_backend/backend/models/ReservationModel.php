@@ -17,7 +17,7 @@ class ReservationModel
 
     public function getReservations()
     {
-        $this->db->query("SELECT * FROM reservation");
+        $this->db->query("SELECT * FROM flight f,reservation r,user u WHERE f.id=r.flight ORDER BY  reserved_time DESC");
         return $this->db->all();
     }
 
